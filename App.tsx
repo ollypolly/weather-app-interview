@@ -10,7 +10,7 @@ export default function App() {
   const [data, setData] = useState();
 
   useEffect(() => {
-    fetch("https://localhost:3000/sydney")
+    fetch("https://localhost:3000/london")
       .then((response) => response.json())
       .then(setData)
       .catch((error) => {

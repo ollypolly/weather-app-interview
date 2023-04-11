@@ -10,8 +10,10 @@ interface WeatherData {
   windDirection: string; // "N", "S", "E", "W"
 }
 
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const handlers = [
-  rest.get("https://localhost:3000/london", (_, res, ctx) =>
+  rest.get("https://localhost:3000/london", async (_, res, ctx) =>
     res(
       ctx.status(200),
       ctx.json<WeatherData>({
@@ -25,8 +27,10 @@ const handlers = [
     )
   ),
 
-  rest.get("https://localhost:3000/sydney", (_, res, ctx) =>
-    res(
+  rest.get("https://localhost:3000/sydney", async (_, res, ctx) => {
+    await wait(2000);
+
+    return res(
       ctx.status(200),
       ctx.json<WeatherData>({
         city: "Sydney",
@@ -36,8 +40,8 @@ const handlers = [
         windSpeed: 5,
         windDirection: "W",
       })
-    )
-  ),
+    );
+  }),
 ];
 
 export const server = setupServer(...handlers);
