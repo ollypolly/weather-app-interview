@@ -1,10 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { useEffect, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import "react-native-url-polyfill/auto";
+import { server } from "./api";
+
+server.listen({ onUnhandledRequest: "bypass" });
 
 export default function App() {
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    fetch("https://localhost:3000/sydney")
+      .then((response) => response.json())
+      .then(setData)
+      .catch((error) => {
+        return console.error(error);
+      });
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+      <Text>{JSON.stringify(data)}</Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -13,8 +29,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
