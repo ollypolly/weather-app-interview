@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 import "react-native-url-polyfill/auto";
 import { server } from "./api";
 
+// don't worry about this, it's just setting up the mock api server
 server.listen({ onUnhandledRequest: "bypass" });
 
 export default function App() {
@@ -13,9 +14,7 @@ export default function App() {
     fetch("https://localhost:3000/london")
       .then((response) => response.json())
       .then(setData)
-      .catch((error) => {
-        return console.error(error);
-      });
+      .catch(console.error);
   }, []);
 
   return (
