@@ -16,18 +16,22 @@ import { server, WeatherData } from "./api";
 server.listen({ onUnhandledRequest: "bypass" });
 
 export default function App() {
-  const [data, setData] = useState<WeatherData[]>();
+  const [cities, setCities] = useState<WeatherData[]>();
   const [city, setCity] = useState<string>("london");
 
-  const selectedCityData = data?.find(
+  const selectedCityData = cities?.find(
     (WeatherData) => WeatherData.city.toLowerCase() === city
   );
 
+  const highestTempCity = cities?.reduce((prev, curr) =>
+    prev.maxTemperature > curr.maxTemperature ? prev : curr
+  );
+
   useEffect(() => {
-    setData(undefined);
+    setCities(undefined);
     fetch(`https://localhost:3000/cities`)
       .then((response) => response.json())
-      .then(setData)
+      .then(setCities)
       .catch(console.error);
   }, []);
 
@@ -37,7 +41,11 @@ export default function App() {
         <Button title="London" onPress={() => setCity("london")} />
         <Button title="Sydney" onPress={() => setCity("sydney")} />
         {selectedCityData ? (
-          <CityCard {...selectedCityData} />
+          <>
+            <Text>{`Max temperature is at ${highestTempCity?.city}`}</Text>
+            <Text>{highestTempCity?.maxTemperature} degrees</Text>
+            <CityCard {...selectedCityData} />
+          </>
         ) : (
           <ActivityIndicator />
         )}
