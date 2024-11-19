@@ -42,7 +42,7 @@ const handlers = [
   }),
 
   rest.get("https://localhost:3000/cities", async (_, res, ctx) => {
-    return res();
+    return res(ctx.status(200), ctx.json<WeatherData[]>([london, sydney]));
   }),
 ];
 

@@ -16,24 +16,31 @@ import { server, WeatherData } from "./api";
 server.listen({ onUnhandledRequest: "bypass" });
 
 export default function App() {
-  const [data, setData] = useState<WeatherData>();
-
+  const [data, setData] = useState<WeatherData[]>();
   const [city, setCity] = useState<string>("london");
+
+  const selectedCityData = data?.find(
+    (WeatherData) => WeatherData.city.toLowerCase() === city
+  );
 
   useEffect(() => {
     setData(undefined);
-    fetch(`https://localhost:3000/${city}`)
+    fetch(`https://localhost:3000/cities`)
       .then((response) => response.json())
       .then(setData)
       .catch(console.error);
-  }, [city]);
+  }, []);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.container}>
         <Button title="London" onPress={() => setCity("london")} />
         <Button title="Sydney" onPress={() => setCity("sydney")} />
-        {data ? <CountryCard {...data} /> : <ActivityIndicator />}
+        {selectedCityData ? (
+          <CountryCard {...selectedCityData} />
+        ) : (
+          <ActivityIndicator />
+        )}
         <StatusBar style="auto" />
       </ScrollView>
     </SafeAreaView>
