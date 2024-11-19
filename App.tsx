@@ -38,8 +38,16 @@ export default function App() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.container}>
-        <Button title="London" onPress={() => setSelectedCity("london")} />
-        <Button title="Sydney" onPress={() => setSelectedCity("sydney")} />
+        <Button
+          disabled={selectedCity === "london"}
+          title="London"
+          onPress={() => setSelectedCity("london")}
+        />
+        <Button
+          disabled={selectedCity === "sydney"}
+          title="Sydney"
+          onPress={() => setSelectedCity("sydney")}
+        />
         {selectedCityData ? (
           <>
             <Text>{`Max temperature is at ${highestTempCity?.city}`}</Text>
