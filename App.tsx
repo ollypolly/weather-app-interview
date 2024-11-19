@@ -17,10 +17,10 @@ server.listen({ onUnhandledRequest: "bypass" });
 
 export default function App() {
   const [cities, setCities] = useState<WeatherData[]>();
-  const [city, setCity] = useState<string>("london");
+  const [selectedCity, setSelectedCity] = useState<string>("london");
 
   const selectedCityData = cities?.find(
-    (WeatherData) => WeatherData.city.toLowerCase() === city
+    (WeatherData) => WeatherData.city.toLowerCase() === selectedCity
   );
 
   const highestTempCity = cities?.reduce((prev, curr) =>
@@ -38,8 +38,8 @@ export default function App() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.container}>
-        <Button title="London" onPress={() => setCity("london")} />
-        <Button title="Sydney" onPress={() => setCity("sydney")} />
+        <Button title="London" onPress={() => setSelectedCity("london")} />
+        <Button title="Sydney" onPress={() => setSelectedCity("sydney")} />
         {selectedCityData ? (
           <>
             <Text>{`Max temperature is at ${highestTempCity?.city}`}</Text>
