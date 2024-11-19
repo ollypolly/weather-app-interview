@@ -37,7 +37,7 @@ export default function App() {
         <Button title="London" onPress={() => setCity("london")} />
         <Button title="Sydney" onPress={() => setCity("sydney")} />
         {selectedCityData ? (
-          <CountryCard {...selectedCityData} />
+          <CityCard {...selectedCityData} />
         ) : (
           <ActivityIndicator />
         )}
@@ -47,9 +47,9 @@ export default function App() {
   );
 }
 
-const CountryCard = (data: WeatherData) => {
+const CityCard = (data: WeatherData) => {
   return (
-    <View style={styles.countryCard}>
+    <View style={styles.cityCard}>
       <Text>City</Text>
       <Text>{data.city}</Text>
       <Text>Summary</Text>
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
   },
-  countryCard: {
+  cityCard: {
     margin: 20,
   },
 });
